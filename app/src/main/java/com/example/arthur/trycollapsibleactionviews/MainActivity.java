@@ -6,6 +6,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);
 
 
@@ -24,15 +26,15 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.search_view_inmenu, menu);
 
 
-//        MenuItem searchItem = menu.findItem(R.id.action_search);
-//          search = (SearchView) MenuItemCompat.getActionView(searchItem);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+          mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         //setupSearchView(searchItem);
 
 
-        mSearchView=(SearchView) findViewById(R.id.searchView1);
+        //mSearchView=(SearchView) findViewById(R.id.searchView1);
         mSearchView.setQueryHint("SearchView");
 
         //*** setOnQueryTextFocusChangeListener ***
