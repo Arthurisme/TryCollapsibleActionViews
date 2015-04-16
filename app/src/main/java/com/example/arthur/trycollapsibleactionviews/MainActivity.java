@@ -2,7 +2,9 @@ package com.example.arthur.trycollapsibleactionviews;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
@@ -10,18 +12,31 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-    SearchView search;
+    SearchView mSearchView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        search=(SearchView) findViewById(R.id.searchView1);
-        search.setQueryHint("SearchView");
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+
+//        MenuItem searchItem = menu.findItem(R.id.action_search);
+//          search = (SearchView) MenuItemCompat.getActionView(searchItem);
+        //setupSearchView(searchItem);
+
+
+        mSearchView=(SearchView) findViewById(R.id.searchView1);
+        mSearchView.setQueryHint("SearchView");
 
         //*** setOnQueryTextFocusChangeListener ***
-        search.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+        mSearchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -33,7 +48,7 @@ public class MainActivity extends Activity {
         });
 
         //*** setOnQueryTextListener ***
-        search.setOnQueryTextListener(new OnQueryTextListener() {
+        mSearchView.setOnQueryTextListener(new OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -49,16 +64,58 @@ public class MainActivity extends Activity {
             public boolean onQueryTextChange(String newText) {
                 // TODO Auto-generated method stub
 
-                	Toast.makeText(getBaseContext(), newText,
-                Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), newText,
+                        Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
+
+        //
+        return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//    private void setupSearchView(MenuItem searchItem) {
+//
+//        if (isAlwaysExpanded()) {
+//            mSearchView.setIconifiedByDefault(false);
+//        } else {
+//            searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM
+//                    | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+//        }
+//
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        if (searchManager != null) {
+//            List searchables = searchManager.getSearchablesInGlobalSearch();
+//
+//            SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
+//            for (SearchableInfo inf : searchables) {
+//                if (inf.getSuggestAuthority() != null
+//                        && inf.getSuggestAuthority().startsWith("applications")) {
+//                    info = inf;
+//                }
+//            }
+//            mSearchView.setSearchableInfo(info);
+//        }
+//
+//        mSearchView.setOnQueryTextListener(this);
+//    }
+//
+//    public boolean onQueryTextChange(String newText) {
+//        mStatusView.setText("Query = " + newText);
+//        return false;
+//    }
+//
+//    public boolean onQueryTextSubmit(String query) {
+//        mStatusView.setText("Query = " + query + " : submitted");
+//        return false;
+//    }
+//
+//    public boolean onClose() {
+//        mStatusView.setText("Closed!");
+//        return false;
+//    }
+//
+//    protected boolean isAlwaysExpanded() {
+//        return false;
+//    }
 }
